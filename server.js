@@ -10,8 +10,7 @@ const app = express();
 
 app.get("/", async(req, res) => {
     const allBooks = await mernDB.collection("books").find().toArray();
-    console.log(allBooks);
-    res.send("welcome homepage");
+    res.send(`<h1>welcome</h1> ${allBooks.map(elem => `<p>${elem.name} written by ${elem.author}</p>`)}`);
 })
 app.get("/admin", (req, res) => {
     res.send("admin")
