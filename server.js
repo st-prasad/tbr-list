@@ -20,6 +20,12 @@ app.get("/admin", (req, res) => {
     res.render("admin")
 });
 
+// custom manualy created api
+app.get("/api/books", async(req, res) => {
+    const allBooks = await mernDB.collection("books").find().toArray();
+    res.json(allBooks);
+})
+
 async function start() {
     // below string is commonly used in MongoDB connection strings to specify the authentication database. The authSource parameter is used to indicate the database where the authentication credentials are stored. When the authSource is set to admin, it tells MongoDB to look for the credentials in the admin database.
     const client = new MongoClient("mongodb+srv://root:root@cluster0.e6m3qhx.mongodb.net/?retryWrites=true&w=majority");
