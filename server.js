@@ -3,17 +3,21 @@
 const {MongoClient} = require("mongodb")
 const express = require("express");
 let mernDB;
+
 const app = express();
+app.set("view engine", "ejs")
+app.set("views", "./views")
+app.use(express.static("public"))
 
 //request and responce are given by express server
 // app.get() is a function that tells the server what to do when a get request at the given route is called. It has a callback function (req, res) that listen to the incoming request req object and respond accordingly using res response object.
 
 app.get("/", async(req, res) => {
     const allBooks = await mernDB.collection("books").find().toArray();
-    res.send(`<h1>welcome</h1> ${allBooks.map(elem => `<p>${elem.name} written by ${elem.author}</p>`)}`);
+    res.render("home", {allBooks})
 })
 app.get("/admin", (req, res) => {
-    res.send("admin")
+    res.render("admin")
 });
 
 async function start() {
